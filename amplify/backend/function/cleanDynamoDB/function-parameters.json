@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "BlocalAppAPI": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

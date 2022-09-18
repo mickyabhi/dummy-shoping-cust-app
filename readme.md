@@ -1,0 +1,1 @@
+GraphQL endpoint: https://wvhbhz7tpbctlcb7dy56p5kj7e.appsync-api.ap-south-1.amazonaws.com/graphql

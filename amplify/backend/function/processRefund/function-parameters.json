@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "auth": {
+      "blocalapp0b9d70ca": [
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "BlocalAppAPI": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

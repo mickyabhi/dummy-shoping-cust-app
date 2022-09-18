@@ -1,0 +1,304 @@
+type User
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "userByPrimaryNumber"
+    fields: ["primaryNumber"]
+    queryField: "userByPrimaryNumber"
+  ) {
+  id: ID!
+  email: String
+  gender: String
+  firstName: String!
+  lastName: String
+  primaryNumber: String!
+  secondaryNumber: String
+  userImage: UserImage @connection(name: "UserImage")
+  addresses: [Address] @connection(name: "UserAddress")
+  orders: [Order] @connection(name: "UserOrders")
+  carts: [Cart] @connection(name: "UserCart")
+  conversations: [Conversation] @connection(name: "UserConversations")
+}
+
+type UserImage
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "imagesByUserId"
+    fields: ["userId"]
+    queryField: "imagesByUserId"
+  ) {
+  userId: ID!
+  imagePath: String
+  user: User @connection(name: "UserImage")
+}
+
+type Address
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "addressByUserId"
+    fields: ["userId"]
+    queryField: "addressByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  tag: String
+  city: String
+  state: String
+  careOf: String
+  address: String
+  pincode: String
+  location: String
+  landmark: String
+  latitude: String
+  longitude: String
+  contactNumber: String
+  user: User @connection(name: "UserAddress")
+}
+type SuperAdmin
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "superAdminByUserId"
+    fields: ["userId"]
+    queryField: "superAdminByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  user: User! @connection
+}
+
+type StoreAdmin
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "storeAdminByUserId"
+    fields: ["userId"]
+    queryField: "storeAdminByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  user: User! @connection
+  store: Store! @connection(name: "StoreAdmins")
+}
+type Store
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "storeByPrimaryNumber"
+    fields: ["primaryNumber"]
+    queryField: "storeByPrimaryNumber"
+  )
+  @key(
+    name: "storeByCategory"
+    fields: ["category"]
+    queryField: "storeByCategory"
+  ) {
+  id: ID!
+  name: String!
+  category: String!
+  gstNumber: String!
+  primaryNumber: String!
+  licenseNumber: String!
+  city: String
+  state: String
+  address: String
+  pincode: String
+  location: String
+  landmark: String
+  latitude: String
+  longitude: String
+  contactNumber: String
+  storeImages: [StoreImage] @connection(name: "StoreImage")
+  storeAdmins: [StoreAdmin] @connection(name: "StoreAdmins")
+  bankInfo: BankInfo @connection(name: "StoreBankInfo")
+  orders: [Order]! @connection(name: "StoreOrders")
+  conversations: [Conversation]! @connection(name: "StoreConversations")
+  minimumAmount: Int
+}
+
+type StoreImage
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "imagesByStoreId"
+    fields: ["storeId"]
+    queryField: "imagesByStoreId"
+  ) {
+  storeId: ID!
+  imagePath: String!
+  store: Store @connection(name: "StoreImage")
+}
+type BankInfo
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "bankAccountByStoreId"
+    fields: ["storeId"]
+    queryField: "bankAccountByStoreId"
+  ) {
+  id: ID!
+  ifsc: String!
+  city: String!
+  bankName: String!
+  branchName: String!
+  accountNumber: String!
+  accountType: String!
+  accountHolderName: String!
+  storeId: String
+  store: Store @connection(name: "StoreBankInfo")
+}
+type Product
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "productByCategory"
+    fields: ["category"]
+    queryField: "productByCategory"
+  )
+  @key(
+    name: "productBySubCategory"
+    fields: ["subCategory"]
+    queryField: "productBySubCategory"
+  ) {
+  id: ID!
+  mrp: Int
+  name: String
+  category: String!
+  description: String
+  subCategory: String
+  productImage: [ProductImage] @connection(name: "ProductImage")
+  merchandiseCategory: String
+}
+
+type ProductImage
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "imagesByProductId"
+    fields: ["productId"]
+    queryField: "imagesByProductId"
+  ) {
+  productId: ID!
+  imagePath: String!
+  product: Product @connection(name: "ProductImage")
+}
+type StoreProduct
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "productByProductId"
+    fields: ["productId"]
+    queryField: "productByProductId"
+  )
+  @key(
+    name: "productsByStoreId"
+    fields: ["storeId"]
+    queryField: "productsByStoreId"
+  ) {
+  id: ID!
+  mrp: Int
+  storeId: ID!
+  discount: Int
+  productId: ID!
+  sellingPrice: Int
+  productsQuantity: Int
+  product: Product @connection(fields: ["productId"])
+}
+type CartItem
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "cartsItemsByCartId"
+    fields: ["cartId"]
+    queryField: "cartsItemsByCartId"
+  ) {
+  id: ID!
+  quantity: Int
+  cartId: ID!
+  cart: Cart @connection(name: "ItemCart")
+  storeProductId: ID!
+  storeProduct: StoreProduct @connection(fields: ["storeProductId"])
+}
+type Cart
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(name: "cartsByUserId", fields: ["userId"], queryField: "cartsByUserId")
+  @key(
+    name: "cartsByStoreId"
+    fields: ["storeId"]
+    queryField: "cartsByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  discount: Int
+  originalCartValue: Int
+  isOrderPlaced: Boolean
+  user: User @connection(name: "UserCart")
+  order: Order @connection(name: "CartOrder")
+  cartItems: [CartItem] @connection(name: "ItemCart")
+}
+type Order
+  @model
+  @key(name: "ordersByUserId", fields: ["userId"], queryField: "ordersByUserId")
+  @key(name: "ordersByCartId", fields: ["cartId"], queryField: "ordersByCartId")
+  @key(
+    name: "ordersByStoreId"
+    fields: ["storeId"]
+    queryField: "ordersByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  cartId: ID!
+  orderStatus: String
+  user: User @connection(name: "UserOrders")
+  store: Store @connection(name: "StoreOrders")
+  cart: Cart @connection(name: "CartOrder")
+}
+
+type Promotion @model @auth(rules: [{allow: owner, queries: null}]) {
+  id: ID!
+  isActive: Boolean!
+  bannerImage: String!
+  detailLink: String
+}
+
+type Message
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "messagesByConversationId"
+    fields: ["conversationId"]
+    queryField: "messagesByConversationId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  conversationId: ID!
+  conversation: Conversation @connection(name: "ConversationMessages")
+}
+
+type Conversation
+  @model
+  @auth(rules: [{allow: owner, queries: null}])
+  @key(
+    name: "conversationsByUserId"
+    fields: ["userId"]
+    queryField: "conversationsByUserId"
+  )
+  @key(
+    name: "conversationsByStoreId"
+    fields: ["storeId"]
+    queryField: "conversationsByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  store: Store @connection(name: "StoreConversations")
+  user: User @connection(name: "UserConversations")
+  messages: [Message] @connection(name: "ConversationMessages")
+}

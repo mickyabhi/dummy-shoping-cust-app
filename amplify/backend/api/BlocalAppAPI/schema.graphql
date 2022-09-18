@@ -1,0 +1,868 @@
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "userByPrimaryNumber"
+    fields: ["primaryNumber"]
+    queryField: "userByPrimaryNumber"
+  ) {
+  id: ID!
+  email: String
+  gender: String
+  firstName: String!
+  lastName: String!
+  primaryNumber: String!
+  secondaryNumber: String
+  deletedAt: String
+  userImage: UserImage @connection(name: "UserImage")
+  addresses: [Address] @connection(name: "UserAddress")
+  orders: [Order] @connection(name: "UserOrders")
+  carts: [Cart] @connection(name: "UserCart")
+  conversations: [Conversation] @connection(name: "UserConversations")
+}
+
+type UserImage
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "imagesByUserId"
+    fields: ["userId"]
+    queryField: "imagesByUserId"
+  ) {
+  userId: ID!
+  imagePath: String!
+  deletedAt: String
+  user: User @connection(name: "UserImage")
+}
+
+type Address
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "addressByUserId"
+    fields: ["userId"]
+    queryField: "addressByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  tag: String!
+  city: String!
+  state: String!
+  careOf: String!
+  careOfLastName: String!
+  address: String!
+  pincode: String!
+  location: String!
+  landmark: String
+  latitude: Float
+  longitude: Float
+  contactNumber: String!
+  deletedAt: String
+  user: User @connection(name: "UserAddress")
+}
+type SuperAdmin
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "superAdminByUserId"
+    fields: ["userId"]
+    queryField: "superAdminByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  deletedAt: String
+  user: User! @connection
+}
+
+type StoreAdmin
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "storeAdminByUserId"
+    fields: ["userId"]
+    queryField: "storeAdminByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  deletedAt: String
+  user: User! @connection
+  store: Store! @connection(name: "StoreAdmins")
+}
+type Store
+  @model
+  @auth(
+    rules: [
+      {
+        allow: private
+        operations: [read, update, create]
+        provider: userPools
+      }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "storeByPrimaryNumber"
+    fields: ["primaryNumber"]
+    queryField: "storeByPrimaryNumber"
+  )
+  @key(
+    name: "storeByCategory"
+    fields: ["category"]
+    queryField: "storeByCategory"
+  ) {
+  id: ID!
+  name: String!
+  category: String!
+  gstNumber: String!
+  primaryNumber: String!
+  licenseNumber: String!
+  city: String!
+  state: String!
+  address: String!
+  pincode: String!
+  location: String!
+  landmark: String!
+  latitude: Float
+  longitude: Float
+  deliveryCharges: Int
+  contactNumber: String!
+  minimumAmount: Int
+  deletedAt: String
+  storeImages: [StoreImage] @connection(name: "StoreImage")
+  storeAdmins: [StoreAdmin] @connection(name: "StoreAdmins")
+  bankInfo: BankInfo @connection(name: "StoreBankInfo")
+  orders: [Order] @connection(name: "StoreOrders")
+  conversations: [Conversation] @connection(name: "StoreConversations")
+}
+
+type StoreImage
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "imagesByStoreId"
+    fields: ["storeId"]
+    queryField: "imagesByStoreId"
+  ) {
+  storeId: ID!
+  imagePath: String!
+  deletedAt: String
+  store: Store @connection(name: "StoreImage")
+}
+type BankInfo
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "bankInfoByStoreId"
+    fields: ["storeId"]
+    queryField: "bankInfoByStoreId"
+  ) {
+  id: ID!
+  storeId: ID!
+  ifsc: String!
+  city: String!
+  upiId: String
+  bankName: String!
+  branchName: String!
+  accountType: String!
+  accountNumber: String!
+  accountHolderName: String!
+  deletedAt: String
+  store: Store @connection(name: "StoreBankInfo")
+}
+type Product
+  @model
+  @auth(
+    rules: [
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @searchable
+  @key(
+    name: "productByCategory"
+    fields: ["category"]
+    queryField: "productByCategory"
+  )
+  @key(
+    name: "productBySubCategory"
+    fields: ["subCategory"]
+    queryField: "productBySubCategory"
+  )
+  @key(
+    name: "productByMasterCategory"
+    fields: ["masterCategory"]
+    queryField: "productByMasterCategory"
+  ) {
+  id: ID!
+  mrp: Int
+  name: String
+  category: String!
+  description: String!
+  subCategory: String
+  masterCategory: String!
+  merchandiseCategory: String
+  deletedAt: String
+  productImage: [ProductImage] @connection(name: "ProductImage")
+}
+
+type ProductImage
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "imagesByProductId"
+    fields: ["productId"]
+    queryField: "imagesByProductId"
+  ) {
+  productId: ID!
+  imagePath: String!
+  deletedAt: String
+  product: Product! @connection(name: "ProductImage")
+}
+type StoreProduct
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [read, create, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "productByProductId"
+    fields: ["productId"]
+    queryField: "productByProductId"
+  )
+  @key(
+    name: "productsByStoreId"
+    fields: ["storeId"]
+    queryField: "productsByStoreId"
+  ) {
+  id: ID!
+  mrp: Int
+  storeId: ID!
+  discount: Int
+  productId: ID!
+  totalSold: Int
+  totalQuantity: Int
+  sellingPrice: Float
+  isInInventory: Boolean!
+  deletedAt: String
+  product: Product! @connection(fields: ["productId"])
+}
+
+enum StoreInventorySyncStatus {
+  PENDING
+  DISPUTED
+  COMPLETED
+}
+type StoreInventorySync
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, create] }
+      { allow: private, operations: [read, create], provider: userPools }
+      { allow: public, operations: [read, update, create], provider: apiKey }
+    ]
+  ) {
+  id: ID!
+  category: String!
+  storeInventorySyncStatus: StoreInventorySyncStatus!
+  deletedAt: String
+  store: Store! @connection(fields: ["id"])
+}
+type CartItem
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "cartsItemsByCartId"
+    fields: ["cartId"]
+    queryField: "cartsItemsByCartId"
+  ) {
+  id: ID!
+  cartId: ID!
+  mrp: Float!
+  quantity: Int!
+  storeProductId: ID!
+  availability: Boolean!
+  orderedQuantity: Int!
+  deletedAt: String
+  cart: Cart @connection(name: "ItemCart")
+  storeProduct: StoreProduct! @connection(fields: ["storeProductId"])
+}
+type Cart
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(name: "cartsByUserId", fields: ["userId"], queryField: "cartsByUserId")
+  @key(
+    name: "cartsByStoreId"
+    fields: ["storeId"]
+    queryField: "cartsByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  discount: Int
+  isOrderPlaced: Boolean!
+  originalCartValue: Float!
+  updatedCartValue: Float
+  deliveryCharges: Int
+  deletedAt: String
+  user: User @connection(name: "UserCart")
+  order: Order @connection(name: "CartOrder")
+  cartItems: [CartItem] @connection(name: "ItemCart")
+}
+
+enum OrderStatus {
+  OPEN
+  CONFIRMED
+  CANCELLED
+  DELIVERED
+  DECLINED
+  DELIVERY_IN_PROGRESS
+}
+
+enum PaymentType {
+  ONLINE
+  COD
+}
+
+type Order
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(name: "ordersByUserId", fields: ["userId"], queryField: "ordersByUserId")
+  @key(name: "ordersByCartId", fields: ["cartId"], queryField: "ordersByCartId")
+  @key(
+    name: "ordersByStoreId"
+    fields: ["storeId"]
+    queryField: "ordersByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  cartId: ID!
+  shortId: String!
+  createdAt: String!
+  razorPayOrderId: ID
+  preferredSlot: String!
+  orderStatus: OrderStatus!
+  paymentType: PaymentType
+  deletedAt: String
+  deliveryAddress: AWSJSON
+  user: User! @connection(name: "UserOrders")
+  store: Store! @connection(name: "StoreOrders")
+  cart: Cart! @connection(name: "CartOrder")
+  razorPayOrder: AWSJSON
+}
+
+type RazorPayOrder
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "razorPayOrderByReceipt"
+    fields: ["receipt"]
+    queryField: "razorPayOrderByReceipt"
+  )
+  @key(
+    name: "razorPayOrderByOrderId"
+    fields: ["orderId"]
+    queryField: "razorPayOrderByOrderId"
+  )
+  @key(
+    name: "razorPayOrderByUserId"
+    fields: ["userId"]
+    queryField: "razorPayOrderByUserId"
+  )
+  @key(
+    name: "razorPayOrderByStoreId"
+    fields: ["storeId"]
+    queryField: "razorPayOrderByStoreId"
+  )
+  @key(
+    name: "razorPayOrderByCartId"
+    fields: ["cartId"]
+    queryField: "razorPayOrderByCartId"
+  ) {
+  id: ID!
+  orderId: ID!
+  userId: ID!
+  storeId: ID!
+  cartId: ID!
+  amount: Int!
+  amount_due: Int!
+  amount_paid: Int!
+  attempts: Int!
+  offers: String
+  offer_id: String
+  created_at: Int
+  currency: String!
+  entity: String!
+  receipt: String!
+  status: String!
+  notes: AWSJSON!
+  deletedAt: String
+}
+
+type RazorPayPayment
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "razorPayPaymentByReceipt"
+    fields: ["receipt"]
+    queryField: "razorPayPaymentByReceipt"
+  )
+  @key(
+    name: "razorPayPaymentByOrderId"
+    fields: ["orderId"]
+    queryField: "razorPayPaymentByOrderId"
+  )
+  @key(
+    name: "razorPayPaymentByUserId"
+    fields: ["userId"]
+    queryField: "razorPayPaymentByUserId"
+  )
+  @key(
+    name: "razorPayPaymentByStoreId"
+    fields: ["storeId"]
+    queryField: "razorPayPaymentByStoreId"
+  )
+  @key(
+    name: "razorPayPaymentByCartId"
+    fields: ["cartId"]
+    queryField: "razorPayPaymentByCartId"
+  ) {
+  id: ID!
+  orderId: ID!
+  userId: ID!
+  storeId: ID!
+  cartId: ID!
+  amount: Int!
+  currency: String!
+  receipt: String!
+  shortOrderId: String
+  razorpay_order_id: String!
+  razorpay_signature: String!
+  razorpay_payment_id: String!
+  checkoutResponse: AWSJSON!
+  razorPayOrder: AWSJSON
+  deletedAt: String
+}
+
+enum RazorPayMerchantPaymentStatus {
+  PENDING
+  PROCESSED
+  DISPUTED
+}
+type RazorPayMerchantPayment
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update, create], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "razorPayMerchantPaymentByReceipt"
+    fields: ["receipt"]
+    queryField: "razorPayMerchantPaymentByReceipt"
+  )
+  @key(
+    name: "razorPayMerchantPaymentByOrderId"
+    fields: ["orderId"]
+    queryField: "razorPayMerchantPaymentByOrderId"
+  )
+  @key(
+    name: "razorPayMerchantPaymentByUserId"
+    fields: ["userId"]
+    queryField: "razorPayMerchantPaymentByUserId"
+  )
+  @key(
+    name: "razorPayMerchantPaymentByStoreId"
+    fields: ["storeId"]
+    queryField: "razorPayMerchantPaymentByStoreId"
+  )
+  @key(
+    name: "razorPayMerchantPaymentByCartId"
+    fields: ["cartId"]
+    queryField: "razorPayMerchantPaymentByCartId"
+  ) {
+  id: ID!
+  orderId: ID!
+  userId: ID!
+  storeId: ID!
+  cartId: ID!
+  amount: Int!
+  receipt: String!
+  deletedAt: String
+  shortOrderId: String
+  razorpay_order_id: String!
+  razorpay_payment_id: String!
+  razorPayOrder: AWSJSON!
+  razorPayPayment: AWSJSON!
+  merchantPaymentResponse: AWSJSON!
+  status: RazorPayMerchantPaymentStatus!
+}
+
+enum RefundReason {
+  CANCELLED_BY_CUSTOMER
+  MODIFIED_BY_MERCHANT
+}
+
+enum RefundStatus {
+  PENDING
+  PROCESSED
+  DISPUTED
+  COMPLETED
+}
+type RefundOrder
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "refundOrderByUserId"
+    fields: ["userId"]
+    queryField: "refundOrderByUserId"
+  )
+  @key(
+    name: "refundOrderByStoreId"
+    fields: ["storeId"]
+    queryField: "refundOrderByStoreId"
+  )
+  @key(
+    name: "refundOrderByOrderId"
+    fields: ["orderId"]
+    queryField: "refundOrderByOrderId"
+  ) {
+  id: ID!
+  cartId: ID!
+  userId: ID!
+  storeId: ID!
+  orderId: ID!
+  notes: AWSJSON!
+  deletedAt: String
+  shortOrderId: String
+  refundReason: RefundReason!
+  refundStatus: RefundStatus!
+  refundAmount: Float!
+  razorPayOrder: AWSJSON!
+  razorPayPayment: AWSJSON!
+}
+
+type OldOrder
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "oldOrderByUserId"
+    fields: ["userId"]
+    queryField: "oldOrderByUserId"
+  )
+  @key(
+    name: "oldOrderByStoreId"
+    fields: ["storeId"]
+    queryField: "oldOrderByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  shortId: String!
+  deletedAt: String
+  orderStatus: String!
+  productDetails: AWSJSON!
+  totalOrderValue: Float!
+}
+
+type OrderRating
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "orderRatingByOrderId"
+    fields: ["orderId"]
+    queryField: "orderRatingByOrderId"
+  )
+  @key(
+    name: "orderRatingByStoreId"
+    fields: ["storeId"]
+    queryField: "orderRatingByStoreId"
+  )
+  @key(
+    name: "orderRatingByUserId"
+    fields: ["userId"]
+    queryField: "orderRatingByUserId"
+  ) {
+  id: ID!
+  orderId: ID!
+  userId: ID!
+  storeId: ID!
+  rating: Int!
+  deletedAt: String
+  reviewMessage: String
+}
+
+type InviteStore
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "invitesByUserId"
+    fields: ["userId"]
+    queryField: "invitesByUserId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeName: String!
+  mobileNumber: String!
+  storeArea: String!
+  city: String!
+  pincode: Int!
+  deletedAt: String
+}
+
+type Notification
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read, update], provider: userPools }
+      { allow: public, operations: [create], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "notificationsByTopic"
+    fields: ["topic"]
+    queryField: "notificationsByTopic"
+  ) {
+  id: ID!
+  topic: ID!
+  title: String!
+  body: String!
+  isRead: Boolean!
+  metaData: AWSJSON
+  deletedAt: String
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+}
+type Message
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "messagesByConversationId"
+    fields: ["conversationId"]
+    queryField: "messagesByConversationId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  type: MessageType!
+  senderId: ID!
+  message: String!
+  conversationId: ID!
+  deletedAt: String
+  conversation: Conversation @connection(name: "ConversationMessages")
+}
+
+type Conversation
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read], provider: apiKey }
+    ]
+  )
+  @key(
+    name: "conversationsByUserId"
+    fields: ["userId"]
+    queryField: "conversationsByUserId"
+  )
+  @key(
+    name: "conversationsByStoreId"
+    fields: ["storeId"]
+    queryField: "conversationsByStoreId"
+  ) {
+  id: ID!
+  userId: ID!
+  storeId: ID!
+  deletedAt: String
+  store: Store @connection(name: "StoreConversations")
+  user: User @connection(name: "UserConversations")
+  messages: [Message] @connection(name: "ConversationMessages")
+}
+
+type Promotion
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [read, update, create] }
+      { allow: private, operations: [read], provider: userPools }
+      { allow: public, operations: [read, update, create], provider: apiKey }
+    ]
+  ) {
+  id: ID!
+  isActive: Boolean!
+  bannerImage: String!
+  detailLink: String
+  deletedAt: String
+}
+
+type Subscription {
+  onUpdateOrderById(id: ID): Order @aws_subscribe(mutations: ["updateOrder"])
+  onUpdateOrderByUserId(userId: ID): Order
+    @aws_subscribe(mutations: ["updateOrder"])
+  onUpdateOrderByStoreId(storeId: ID): Order
+    @aws_subscribe(mutations: ["updateOrder"])
+
+  onCreateConversationByStoreId(storeId: ID): Conversation
+    @aws_subscribe(mutations: ["createConversation"])
+  onCreateConversationByUserId(userId: ID): Conversation
+    @aws_subscribe(mutations: ["createConversation"])
+  onUpdateConversationByStoreId(storeId: ID): Conversation
+    @aws_subscribe(mutations: ["updateConversation"])
+  onUpdateConversationByUserId(userId: ID): Conversation
+    @aws_subscribe(mutations: ["updateConversation"])
+
+  onCreateMessageByConversationId(conversationId: ID): Message
+    @aws_subscribe(mutations: ["createMessage"])
+
+  onUpdateCartByUserId(userId: ID): Cart
+    @aws_subscribe(mutations: ["updateCart"])
+
+  onCreateNotificationByTopic(topic: ID): Notification
+    @aws_subscribe(mutations: ["createNotification"])
+
+  onCreateCartItemByUserId(userId: ID): CartItem
+    @aws_subscribe(mutations: ["createCartItem"])
+  onUpdateCartItemByUserId(userId: ID): CartItem
+    @aws_subscribe(mutations: ["updateCartItem"])
+  onDeleteCartItemByUserId(userId: ID): CartItem
+    @aws_subscribe(mutations: ["deleteCartItem"])
+}
+
+type Mutation {
+  createOrderId(
+    amount: Float
+    orderId: String
+    userId: String
+    storeId: String
+    cartId: String
+  ): AWSJSON @function(name: "createOrder-${env}")
+
+  processMerchantPayment(
+    amount: Float
+    orderId: String
+    storeId: String
+    cartId: String
+  ): AWSJSON @function(name: "processMerchantPayment-${env}")
+
+  syncStoreInventory(storeId: String): AWSJSON
+    @function(name: "syncStoreInventory-${env}")
+}

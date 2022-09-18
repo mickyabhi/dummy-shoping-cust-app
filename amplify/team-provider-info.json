@@ -1,0 +1,130 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-blocalapp-dev-215200-authRole",
+      "UnauthRoleArn": "arn:aws:iam::758074917527:role/amplify-blocalapp-dev-215200-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::758074917527:role/amplify-blocalapp-dev-215200-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+      "UnauthRoleName": "amplify-blocalapp-dev-215200-unauthRole",
+      "StackName": "amplify-blocalapp-dev-215200",
+      "StackId": "arn:aws:cloudformation:ap-south-1:758074917527:stack/amplify-blocalapp-dev-215200/6555c1a0-17d3-11ec-81df-0a19d223a97a",
+      "AmplifyAppId": "du0setx54rkvc"
+    },
+    "categories": {
+      "auth": {
+        "blocalapp0b9d70ca": {
+          "userPoolId": "ap-south-1_zt5ofQ7in",
+          "userPoolName": "blocal-custom-auth",
+          "webClientId": "4pkcmeom24al3rh4glmutpjq0s",
+          "nativeClientId": "4pkcmeom24al3rh4glmutpjq0s",
+          "identityPoolId": "ap-south-1:851422d8-0d37-4227-91d4-7da18c1c5951",
+          "identityPoolName": "blocal_app",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::758074917527:role/Cognito_BlocalAppAuth_Role",
+          "authRoleName": "Cognito_BlocalAppAuth_Role",
+          "unauthRoleArn": "arn:aws:iam::758074917527:role/Cognito_BlocalAppUnauth_Role",
+          "unauthRoleName": "Cognito_BlocalAppUnauth_Role"
+        }
+      },
+      "storage": {
+        "blocalappstaginga8791cc5": {
+          "bucketName": "blocalappstorage",
+          "region": "ap-south-1"
+        }
+      },
+      "function": {
+        "createOrder": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/createOrder-686f68396e6b514e4b4d-build.zip"
+        },
+        "confirmOrder": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/confirmOrder-2b695532334530656475-build.zip"
+        },
+        "processRefund": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/processRefund-3239385a37346d377353-build.zip"
+        },
+        "processMerchantPayment": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/processMerchantPayment-4e772b4e7a624f6e3562-build.zip"
+        },
+        "syncStoreInventory": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/syncStoreInventory-714e6632534b467a384e-build.zip"
+        },
+        "cleanDynamoDB": {
+          "deploymentBucketName": "amplify-blocalapp-dev-215200-deployment",
+          "s3Key": "amplify-builds/cleanDynamoDB-714c5374714a56753569-build.zip"
+        }
+      }
+    }
+  },
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-blocalappstaging-prod-143355-authRole",
+      "UnauthRoleArn": "arn:aws:iam::758074917527:role/amplify-blocalappstaging-prod-143355-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::758074917527:role/amplify-blocalappstaging-prod-143355-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+      "UnauthRoleName": "amplify-blocalappstaging-prod-143355-unauthRole",
+      "StackName": "amplify-blocalappstaging-prod-143355",
+      "StackId": "arn:aws:cloudformation:ap-south-1:758074917527:stack/amplify-blocalappstaging-prod-143355/155dfcd0-6c74-11ec-b669-0a608f303098",
+      "AmplifyAppId": "du0setx54rkvc"
+    },
+    "categories": {
+      "auth": {
+        "blocalapp0b9d70ca": {
+          "userPoolId": "ap-south-1_zt5ofQ7in",
+          "userPoolName": "blocal-custom-auth",
+          "webClientId": "4pkcmeom24al3rh4glmutpjq0s",
+          "nativeClientId": "4pkcmeom24al3rh4glmutpjq0s",
+          "identityPoolId": "ap-south-1:851422d8-0d37-4227-91d4-7da18c1c5951",
+          "identityPoolName": "blocal_app",
+          "allowUnauthenticatedIdentities": true,
+          "authRoleArn": "arn:aws:iam::758074917527:role/Cognito_BlocalAppAuth_Role",
+          "authRoleName": "Cognito_BlocalAppAuth_Role",
+          "unauthRoleArn": "arn:aws:iam::758074917527:role/Cognito_BlocalAppUnauth_Role",
+          "unauthRoleName": "Cognito_BlocalAppUnauth_Role"
+        }
+      },
+      "storage": {
+        "blocalappstaginga8791cc5": {
+          "bucketName": "blocalappstorage",
+          "region": "ap-south-1"
+        }
+      },
+      "function": {
+        "createOrder": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/createOrder-686f68396e6b514e4b4d-build.zip"
+        },
+        "confirmOrder": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/confirmOrder-2b695532334530656475-build.zip"
+        },
+        "processRefund": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/processRefund-5758564e684174656e65-build.zip"
+        },
+        "processMerchantPayment": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/processMerchantPayment-7769484a744145466458-build.zip"
+        },
+        "syncStoreInventory": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/syncStoreInventory-5447774772314f553239-build.zip"
+        },
+        "cleanDynamoDB": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/cleanDynamoDB-365a7370566647497873-build.zip"
+        },
+        "deleteProduct": {
+          "deploymentBucketName": "amplify-blocalappstaging-prod-143355-deployment",
+          "s3Key": "amplify-builds/deleteProduct-33307766675a2f476544-build.zip"
+        }
+      }
+    }
+  }
+}

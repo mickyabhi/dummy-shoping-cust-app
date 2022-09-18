@@ -1,0 +1,131 @@
+{
+  "project_info": {
+    "project_number": "105537675605",
+    "firebase_url": "https://namma-kirana.firebaseio.com",
+    "project_id": "namma-kirana",
+    "storage_bucket": "namma-kirana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105537675605:android:acba419259a91f4de44fdc",
+        "android_client_info": {
+          "package_name": "com.blocal.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105537675605-bo1q7ur5pbfccjk8kuae1p2e0hoiebs0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blocal.merchant",
+            "certificate_hash": "6d2c8d871c61f6c2f9dc078f810d4cf29814f78b"
+          }
+        },
+        {
+          "client_id": "105537675605-efj33mtdhjafil2mid3dgqmon4p970hp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blocal.merchant",
+            "certificate_hash": "85b03bae78ac2e527f3f2985ae40e66ec4b17eaa"
+          }
+        },
+        {
+          "client_id": "105537675605-lrvrghkf2p0cab4t4ld0ijlatm5s86q2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blocal.merchant",
+            "certificate_hash": "9ad2cf3d645116ea7ff7d9e92bc388c1120d3d30"
+          }
+        },
+        {
+          "client_id": "105537675605-q2a87boqjsm954p3v5cc1qqjahqufalm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx6oWrLLUsobL1sQqhKO31wNE0Nw-06qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105537675605-q2a87boqjsm954p3v5cc1qqjahqufalm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "105537675605-gbiluqo22uakj1in6o557hjfe32mdlqd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.modefin.googlePlacepicker"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105537675605:android:87f3bbce56171b82e44fdc",
+        "android_client_info": {
+          "package_name": "com.mode.nammakirana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105537675605-87te5ukbqjkfh02qt53hje01caahgruq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mode.nammakirana",
+            "certificate_hash": "6d2c8d871c61f6c2f9dc078f810d4cf29814f78b"
+          }
+        },
+        {
+          "client_id": "105537675605-btee4vb89294nmqq4r93pl3ck8iec8bj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mode.nammakirana",
+            "certificate_hash": "3d72eaa16b1c95b6ff6ee7fd7e25fba8fdffc6ad"
+          }
+        },
+        {
+          "client_id": "105537675605-krsj31b8cacdfsu2shph928dq2cb6tq1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mode.nammakirana",
+            "certificate_hash": "85b03bae78ac2e527f3f2985ae40e66ec4b17eaa"
+          }
+        },
+        {
+          "client_id": "105537675605-q2a87boqjsm954p3v5cc1qqjahqufalm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx6oWrLLUsobL1sQqhKO31wNE0Nw-06qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105537675605-q2a87boqjsm954p3v5cc1qqjahqufalm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "105537675605-gbiluqo22uakj1in6o557hjfe32mdlqd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.modefin.googlePlacepicker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

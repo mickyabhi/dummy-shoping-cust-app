@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authblocalapp0b9d70ca"
+    },
+    "conflictResolution": {},
+    "apiName": "BlocalAppAPI",
+    "gqlSchemaPath": "/Users/kavyasoni/Development/blocal-merchant-mobile-app/amplify/backend/api/BlocalAppAPI/schema.graphql",
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 365,
+        "apiKeyExpirationDate": "2022-12-20T05:58:28.994Z",
+        "keyDescription": "functions-api-key"
+      }
+    ]
+  }
+}

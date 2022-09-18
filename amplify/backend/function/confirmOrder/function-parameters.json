@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "auth": {
+      "blocalapp0b9d70ca": [
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "BlocalAppAPI": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "storage": {
+      "User:@model(appsync)": [
+        "read"
+      ],
+      "Store:@model(appsync)": [
+        "read"
+      ],
+      "CartItem:@model(appsync)": [
+        "read"
+      ],
+      "Cart:@model(appsync)": [
+        "read",
+        "update"
+      ],
+      "Order:@model(appsync)": [
+        "read",
+        "update"
+      ],
+      "RazorPayOrder:@model(appsync)": [
+        "read",
+        "update"
+      ],
+      "RazorPayPayment:@model(appsync)": [
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -1,0 +1,20 @@
+{
+  "authSelections": "identityPoolAndUserPool",
+  "resourceName": "blocalapp0b9d70ca",
+  "serviceType": "imported",
+  "region": "ap-south-1",
+  "usernameAttributes": [
+    "phone_number"
+  ],
+  "requiredAttributes": [
+    "phone_number"
+  ],
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Uppercase",
+    "Requires Numbers"
+  ],
+  "mfaConfiguration": "OFF",
+  "mfaTypes": []
+}

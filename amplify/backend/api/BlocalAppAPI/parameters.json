@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "BlocalAppAPI",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authblocalapp0b9d70ca",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2021-12-20T05:58:33.143Z"
+}
